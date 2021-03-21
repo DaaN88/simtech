@@ -7,7 +7,7 @@
                 @auth
                     <a
                         href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit(); localStorage.clear()"
                         class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
                     >
                         Log out
@@ -17,7 +17,7 @@
                         @csrf
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Log in</a>
+                    <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150" id="login_api_link">Log in</a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Register</a>
@@ -38,18 +38,18 @@
                             </div>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Вычислить числа Фибоначчи</a>
+                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="fibonacci_calc">Вычислить сумму последовательности чисел Фибоначчи</a>
 
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Получить значения DNS записи</a>
+                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="get_dns">Получить значения DNS записи</a>
 
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Список запросов и ответов API</a>
+                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="get_logs">Список запросов и ответов API</a>
 
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Очистить список запросов и ответов API</a>
+                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="clear_logs">Очистить список запросов и ответов API</a>
                                 </div>
                             </div>
                         </div>
                         <div class="hidden md:block">
-                            <div class="ml-4 flex items-center md:ml-6">
+                            <div class="ml-1 flex items-center md:ml-1">
                                 <button class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                     <span class="sr-only">View notifications</span>
                                     <!-- Heroicon name: outline/bell -->
@@ -63,7 +63,7 @@
                                     <div>
                                         <button type="button" class="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-expanded="false" aria-haspopup="true">
                                             <span class="sr-only">Open user menu</span>
-                                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                            <img class="h-11 w-15 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                                         </button>
                                     </div>
 
@@ -88,7 +88,6 @@
                                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
                                     </div>
                                     -->
-
                                 </div>
                             </div>
                         </div>
@@ -163,7 +162,7 @@
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold text-gray-900">
-                        Dashboard
+                        Результаты
                     </h1>
                 </div>
             </header>
@@ -171,7 +170,28 @@
                 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                     <!-- Replace with your content -->
                     <div class="px-4 py-6 sm:px-0">
-                        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                        <div class="flex flex-wrap md:flex-wrap border-dashed border-gray-200 rounded-lg lg:max-w-6xl">
+                            <div class="flex flex-col w-56">
+                                <label>Введите число Фибоначчи</label>
+                                <input id="fibonacci_number" class="border-2 border-gray-400 rounded-md w-44 mb-20" type="text" name="fibonacci_number" value="">
+                                <label>Введите тип</label>
+                                <input id="dns_type" class="border-2 border-gray-400 rounded-md w-44" type="text" name="dns_type" value="">
+                                <label>Введите домен</label>
+                                <input id="dns_domain" class="border-2 border-gray-400 rounded-md w-44" type="text" name="dns_domain" value="">
+                            </div>
+
+                            <div class="flex flex-col w-56 ml-1/5">
+                                <label>Результат</label>
+                                <input id="fibonacci_result" class="border-2 border-gray-400 rounded-md w-20 mb-20" type="text" name="fibonacci_result" value="">
+                                <label>Результат</label>
+                                <textarea id="dns_result" class="border-2 border-gray-400 rounded-md w-96 h-96" name="dns_result"></textarea>
+                            </div>
+
+                            <div class="flex flex-col w-56 ml-1/5">
+                                <label>Логи запросов и ответов API</label>
+                                <textarea id="logs" class="border-2 border-gray-400 rounded-md w-96 h-96" name="logs"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <!-- /End replace -->
                 </div>

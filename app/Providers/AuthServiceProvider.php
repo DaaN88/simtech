@@ -26,7 +26,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        if ( ! $this->app->routesAreCached()) {
+        Passport::tokensCan([
+            'access-logs' => 'Working with logs',
+        ]);
+
+        if (! $this->app->routesAreCached()) {
             Passport::routes();
         }
     }

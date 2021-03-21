@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\PassportAuthController;
 use Illuminate\Support\Facades\Route;
-
-use \App\Http\Controllers\Fibonacci;
+use App\Http\Controllers\EntryPoint;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +15,27 @@ use \App\Http\Controllers\Fibonacci;
 |
 */
 
-Route::middleware('auth:api')->post('/fibonacci', [Fibonacci::class, 'calculate']);
+Route::post('register', [PassportAuthController::class, 'register'])->name('registerApi');
+Route::post('login', [PassportAuthController::class, 'login'])->name('loginApi');
 
-Route::middleware('auth:api')->post('/dns', function (Request $request) {
-    return $request->user();
+// Route for admin permissions
+Route::prefix('admin')->group(function() {
+    Route::post('register', [PassportAuthController::class, 'registerAdmin'])->name('registerAdminApi');
+    Route::post('login', [PassportAuthController::class, 'loginAdmin'])->name('loginAdminApi');
 });
-Route::middleware('auth:api')->get('/admin/log', function (Request $request) {
-    return $request->user();
-});
-Route::middleware('auth:api')->delete('/admin/log/clear', function (Request $request) {
-    return $request->user();
+
+Route::middleware('auth:api')->group(function () {
+    Route::middleware('fibonacci')
+        ->post('/fibonacci', [EntryPoint::class, 'fibonacci'])
+        ->middleware('fibonacci_response');
+
+    Route::middleware('dns')
+        ->post('/dns', [EntryPoint::class, 'dns'])
+        ->middleware('dns_response');
+
+    Route::middleware('scope:access-logs')
+        ->get('/admin/log', [EntryPoint::class, 'getLog']);
+
+    Route::middleware('scope:access-logs')
+        ->delete('/admin/log/clear', [EntryPoint::class, 'clearLog']);
 });
