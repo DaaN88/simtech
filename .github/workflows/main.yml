@@ -32,5 +32,4 @@ jobs:
       - name: Run linter
         # Run Linter
         run: make lint
-          coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
-          debug: true
+         
