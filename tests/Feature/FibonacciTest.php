@@ -86,6 +86,14 @@ class FibonacciTest extends TestCase
                     'error' => '-10 is negative number. Please enter a positive number',
                 ]
             ],
+            'high_number' => [
+                [
+                    'number' => 99999999999999,
+                ],
+                [
+                    'error' => 'Number 99999999999999 is too high. Please Enter a number up to 1450 inclusive',
+                ]
+            ],
         ];
     }
 }

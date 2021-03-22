@@ -182,7 +182,7 @@
 
                             <div class="flex flex-col w-56 ml-1/5">
                                 <label>Результат</label>
-                                <input id="fibonacci_result" class="border-2 border-gray-400 rounded-md w-20 mb-20" type="text" name="fibonacci_result" value="">
+                                <input id="fibonacci_result" class="border-2 border-gray-400 rounded-md w-64 mb-20" type="text" name="fibonacci_result" value="">
                                 <label>Результат</label>
                                 <textarea id="dns_result" class="border-2 border-gray-400 rounded-md w-96 h-96" name="dns_result"></textarea>
                             </div>

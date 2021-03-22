@@ -42,6 +42,12 @@ class Fibonacci
                 ->header('Content-Type', 'application/json');
         }
 
+        if (json_decode($request->number) > 1450) {
+            $error['error'] = "Number {$request->number} is too high. Please Enter a number up to 1450 inclusive";
+            return response($error)
+                ->header('Content-Type', 'application/json');
+        }
+
         return $next($request);
     }
 }
