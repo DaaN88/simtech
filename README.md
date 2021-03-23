@@ -1,6 +1,5 @@
+<a href="https://github.com/DaaN88/simtech/actions">![php_сodesniffer](https://github.com/DaaN88/simtech/actions/workflows/main.yml/badge.svg)</a>  
 <h2>Приложение admin-panel</h2>  
-![php_сodesniffer](https://github.com/DaaN88/simtech/actions/workflows/main.yml/badge.svg)
-<a href="https://github.com/DaaN88/php-project-lvl1/actions">![php_сodesniffer](https://github.com/DaaN88/php-project-lvl1/workflows/php_%D1%81odesniffer/badge.svg)</a><br/>
 
 <b>Стэк:</b>  
  - PHP 7.4
