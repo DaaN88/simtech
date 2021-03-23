@@ -1,4 +1,6 @@
-<h2>Приложение admin-panel</h2>
+<h2>Приложение admin-panel</h2>  
+[![php_сodesniffer](https://github.com/DaaN88/simtech/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/DaaN88/simtech/actions/workflows/main.yml)  
+
 <b>Стэк:</b>  
  - PHP 7.4
  - Laravel 8.33.1
